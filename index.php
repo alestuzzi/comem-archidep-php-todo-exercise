@@ -1,8 +1,8 @@
 <?php
 
-define('BASE_URL', '/');
-define('DB_USER', 'todolist');
-define('DB_PASS', 'chAngeMeN0w');
+define('BASE_URL', 'http://localhost/comem-archidep-php-todo-exercise/');
+define('DB_USER', 'root');
+define('DB_PASS', 'root');
 define('DB_NAME', 'todolist');
 define('DB_HOST', '127.0.0.1');
 define('DB_PORT', '3306');
@@ -36,12 +36,16 @@ switch($_POST['action']) {
 
     $id = $_POST['id'];
     if(is_numeric($id)) {
-    	if($item["done"] == "Undo"){
-    		$updateQuery = 'UPDATE todo.done WHERE id = \''.$id.'\' VALUES(1)';
-    	}
+   
+    	if($_POST['ok']) {
+    		$updateQuery = 'UPDATE todo SET done = 0 WHERE id = \''.$id.'\'';
+		}
     	else{
-    		$updateQuery = 'UPDATE todo.done WHERE id = \''.$id.'\' VALUES(0)';
-    	}
+    		$updateQuery = 'UPDATE todo SET done = 1 WHERE id = \''.$id.'\'';
+    	}	
+    			
+    			
+
       if(!$db->query($updateQuery)) {
         die(print_r($db->errorInfo(), true));
       }
@@ -73,7 +77,7 @@ switch($_POST['action']) {
 /**
  * Select all tasks from the database.
  */
-$selectQuery = 'SELECT * FROM todo'; // IMPLEMENT ME
+$selectQuery = 'SELECT * FROM todo'; 
 $items = $db->query($selectQuery);
 ?>
 
@@ -144,7 +148,7 @@ $items = $db->query($selectQuery);
                     Done
                   <?php } ?>
                 </button>
-
+				<input type='hidden' name='ok' value='<?= $item['done'] ?>' />
                 <!-- Todo item delete button -->
                 <button type='submit' name='action' value='delete' class='btn btn-danger'>
                   X
