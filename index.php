@@ -36,7 +36,12 @@ switch($_POST['action']) {
 
     $id = $_POST['id'];
     if(is_numeric($id)) {
-      $updateQuery = ''; // IMPLEMENT ME
+    	if($item["done"] == "Undo"){
+    		$updateQuery = 'UPDATE todo.done WHERE id = \''.$id.'\' VALUES(1)';
+    	}
+    	else{
+    		$updateQuery = 'UPDATE todo.done WHERE id = \''.$id.'\' VALUES(0)';
+    	}
       if(!$db->query($updateQuery)) {
         die(print_r($db->errorInfo(), true));
       }
