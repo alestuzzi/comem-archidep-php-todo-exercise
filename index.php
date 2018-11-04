@@ -36,15 +36,15 @@ switch($_POST['action']) {
 
     $id = $_POST['id'];
     if(is_numeric($id)) {
-   
+
     	if($_POST['ok']) {
     		$updateQuery = 'UPDATE todo SET done = 0 WHERE id = \''.$id.'\'';
 		}
     	else{
     		$updateQuery = 'UPDATE todo SET done = 1 WHERE id = \''.$id.'\'';
-    	}	
-    			
-    			
+    	}
+
+
 
       if(!$db->query($updateQuery)) {
         die(print_r($db->errorInfo(), true));
@@ -61,7 +61,7 @@ switch($_POST['action']) {
 
     $id = $_POST['id'];
     if(is_numeric($id)) {
-      $deleteQuery = ''; // IMPLEMENT ME
+      $deleteQuery = "DELETE FROM todo WHERE id = '$id' ";
       if(!$db->query($deleteQuery)) {
         die(print_r($db->errorInfo(), true));
       }
@@ -77,7 +77,7 @@ switch($_POST['action']) {
 /**
  * Select all tasks from the database.
  */
-$selectQuery = 'SELECT * FROM todo'; 
+$selectQuery = 'SELECT * FROM todo';
 $items = $db->query($selectQuery);
 ?>
 
